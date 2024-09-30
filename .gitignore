@@ -1,3 +1,14 @@
+# Project specific
+BMtoBMPCpp
+build/*
+*.BM
+*.bm
+*.PAL
+*.pal
+*.bmp
+*.json
+.cache/*
+
 # Prerequisites
 *.d
 
