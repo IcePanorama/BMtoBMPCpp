@@ -10,10 +10,11 @@ class Converter
   std::ifstream pal_file;
   std::string output_filename;
 
+  std::ifstream load_file (const std::string &filename);
+
 public:
-  Converter (std::string &bm_filename, std::string &pal_filename);
   Converter (std::string &bm_filename, std::string &pal_filename,
-             std::string &output_filename);
+             std::string _output_filename = "output.bmp");
 };
 
 #endif /* _CONVERTER_HPP_ */

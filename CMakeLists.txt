@@ -33,6 +33,7 @@ set(INCL_FILES
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(SRC_FILES
     "${SRC_DIR}/main.cpp"
+    "${SRC_DIR}/converter.cpp"
 )
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR})
