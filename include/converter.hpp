@@ -19,8 +19,8 @@ class Converter
   uint32_t read_uint32_from_file (std::ifstream &fptr);
 
 public:
-  Converter (std::string &bm_filename, std::string &pal_filename,
-             std::string _output_filename = "output.bmp");
+  Converter (const std::string &bm_filename, const std::string &pal_filename,
+             const std::string _output_filename = "output.bmp");
 };
 
 #endif /* _CONVERTER_HPP_ */

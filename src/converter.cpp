@@ -1,11 +1,11 @@
 #include "converter.hpp"
 
-#include <cstdint>
 #include <format>
 #include <stdexcept>
 
-Converter::Converter (std::string &bm_filename, std::string &pal_filename,
-                      std::string _output_filename)
+Converter::Converter (const std::string &bm_filename,
+                      const std::string &pal_filename,
+                      const std::string _output_filename)
     : output_filename (_output_filename)
 {
   try

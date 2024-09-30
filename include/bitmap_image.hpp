@@ -2,7 +2,6 @@
 #define _BITMAP_IMAGE_HPP_
 
 #include <cstdint>
-#include <string>
 
 class BitmapImage
 {
