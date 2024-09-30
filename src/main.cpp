@@ -23,14 +23,8 @@ main (void)
   catch (std::runtime_error &e)
     {
       std::cerr << e.what ();
-      if (bm_file)
-        bm_file.close ();
-      if (pal_file)
-        pal_file.close ();
+      return -1;
     }
-
-  bm_file.close ();
-  pal_file.close ();
 
   return 0;
 }
