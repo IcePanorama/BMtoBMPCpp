@@ -1,6 +1,9 @@
 #include "converter.hpp"
 
+#include <array>
+#include <cstddef>
 #include <format>
+#include <iostream>
 #include <stdexcept>
 
 Converter::Converter (const std::string &bm_filename,
@@ -49,12 +52,10 @@ Converter::load_file (const std::string &filename)
 uint32_t
 Converter::read_uint32_from_file (std::ifstream &fptr)
 {
-  char bytes[4];
-  fptr.read (bytes, sizeof (bytes));
+  std::array<uint8_t, 4> bytes;
+  fptr.read (reinterpret_cast<char *> (bytes.data ()), sizeof (bytes));
   if (!fptr)
-    throw std::runtime_error (
-        std::format ("Error reading from file. Expected 4 bytes, got %zu.\n",
-                     fptr.gcount ()));
+    throw std::runtime_error ("Error reading from file.\n");
 
   return ((static_cast<uint32_t> (bytes[3]) << 24)
           | (static_cast<uint32_t> (bytes[2]) << 16)
