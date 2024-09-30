@@ -27,6 +27,7 @@ set(CODE_STYLE GNU)
 
 set(INCL_DIR "${PROJECT_SOURCE_DIR}/include")
 set(INCL_FILES
+    "${INCL_DIR}/converter.hpp"
 )
 
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
