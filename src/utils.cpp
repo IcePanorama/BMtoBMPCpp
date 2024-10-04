@@ -8,7 +8,7 @@ void
 write_string_to_file (std::ofstream &fptr, const std::string &s)
 {
   if (s.empty ())
-    throw std::invalid_argument ("Input string cannot be empty.\n");
+    throw std::runtime_error ("Input string cannot be empty.\n");
 
   fptr.write (s.c_str (), s.length ());
   if (!fptr)

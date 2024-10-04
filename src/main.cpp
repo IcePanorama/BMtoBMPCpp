@@ -34,7 +34,7 @@ main (int argc, char **argv)
     {
       Converter c (bm_filename, pal_filename);
     }
-  catch (const std::exception &e)
+  catch (const std::runtime_error &e)
     {
       std::cerr << e.what ();
       return -1;
