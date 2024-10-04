@@ -1,5 +1,6 @@
 # Project specific
 BMtoBMPCpp
+*.exe
 build/*
 *.BM
 *.bm
