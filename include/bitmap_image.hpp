@@ -6,13 +6,13 @@
 class BitmapImage
 {
   // std::string filename;
-  uint32_t width;
-  uint32_t height;
+  uint32_t width_;
+  uint32_t height_;
   // TODO: handle this part in a cpp kind of way
   // uint8_t **data;
 
 public:
-  BitmapImage (uint32_t _width, uint32_t _height);
+  BitmapImage (uint32_t width, uint32_t height);
 };
 
 #endif /* _BITMAP_IMAGE_HPP_ */

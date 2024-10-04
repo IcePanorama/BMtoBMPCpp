@@ -3,8 +3,8 @@
 #include <format>
 #include <iostream>
 
-BitmapImage::BitmapImage (uint32_t _width, uint32_t _height)
-    : width (_width), height (_height)
+BitmapImage::BitmapImage (uint32_t width, uint32_t height)
+    : width_ (width), height_ (height)
 {
-  std::cout << std::format ("w: {:d}, h: {:d}\n", this->width, this->height);
+  std::cout << std::format ("w: {:d}, h: {:d}\n", this->width_, this->height_);
 }
