@@ -76,6 +76,7 @@ BitmapImage::export_image (void) const
   try
     {
       populate_BITMAPINFOHEADER (fptr);
+      export_data (fptr);
     }
   catch (const std::exception &e)
     {
@@ -132,5 +133,24 @@ BitmapImage::populate_BITMAPINFOHEADER (std::ofstream &output_fptr) const
   catch (const std::exception &e)
     {
       throw e;
+    }
+}
+
+void
+BitmapImage::export_data (std::ofstream &output_fptr) const
+{
+  const uint32_t pad = (4 - (this->width_ * BYTES_PER_PIXEL) % 4) % 4;
+  for (uint32_t i = 0; i < this->height_; i++)
+    {
+      for (uint32_t j = 0; j < this->width_; j++)
+        {
+          for (uint8_t k = 0; k < BYTES_PER_PIXEL; k++)
+            {
+              write_byte_to_file (output_fptr, data->at (i).at (j * 3 + k));
+            }
+        }
+
+      for (uint32_t p = 0; p < pad; p++)
+        write_byte_to_file (output_fptr, 0x0);
     }
 }

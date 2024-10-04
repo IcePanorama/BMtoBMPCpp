@@ -15,6 +15,7 @@ class BitmapImage
   std::optional<std::vector<std::vector<uint8_t> > > data;
 
   void populate_BITMAPINFOHEADER (std::ofstream &output_fptr) const;
+  void export_data (std::ofstream &output_fptr) const;
 
 public:
   BitmapImage (const std::string &filename, uint32_t width, uint32_t height);

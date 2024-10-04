@@ -65,3 +65,11 @@ write_le_int_to_file (std::ofstream &fptr, const uint16_t x)
   if (!fptr)
     throw std::runtime_error ("Error writing uint16 to file.\n");
 }
+
+void
+write_byte_to_file (std::ofstream &fptr, const uint8_t b)
+{
+  fptr.write (reinterpret_cast<const char *> (&b), sizeof (b));
+  if (!fptr)
+    throw std::runtime_error ("Error writing uint16 to file.\n");
+}
