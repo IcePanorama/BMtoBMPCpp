@@ -2,6 +2,7 @@
 #include "utils.hpp"
 
 #include <array>
+#include <cstdint>
 #include <format>
 #include <stdexcept>
 #include <unordered_map>
@@ -74,7 +75,59 @@ BitmapImage::export_image (void) const
 
   try
     {
-      write_string_to_output_file (fptr, "BM");
+      populate_BITMAPINFOHEADER (fptr);
+    }
+  catch (const std::exception &e)
+    {
+      throw e;
+    }
+}
+
+void
+BitmapImage::populate_BITMAPINFOHEADER (std::ofstream &output_fptr) const
+{
+  const uint32_t pixel_data_size
+      = this->height_ * this->width_ * BYTES_PER_PIXEL;
+  const uint32_t output_file_size = 54 + pixel_data_size;
+  constexpr int32_t ppm_resolution = 0x0B13; // pixel per meter
+
+  try
+    {
+      /* Populate BITMAPINFOHEADER. */
+      write_string_to_file (output_fptr, "BM");
+      write_le_int_to_file (output_fptr, output_file_size);
+      write_le_int_to_file (output_fptr,
+                            static_cast<uint32_t> (0x0)); // reserved
+      // pixel array offset
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x36));
+      // DIB header size
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x28));
+      write_le_int_to_file (output_fptr, this->width_);  // DIB header size
+      write_le_int_to_file (output_fptr, this->height_); // DIB header size
+      // num color planes
+      write_le_int_to_file (output_fptr, static_cast<uint16_t> (0x1));
+      // bits per pixel
+      write_le_int_to_file (output_fptr,
+                            static_cast<uint16_t> (BYTES_PER_PIXEL * 8));
+      // no compression
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x0));
+      /*
+       *  img size, dummy 0x0 is okay for uncompressed images, which is what
+       *  we're doing here.
+       *  see:
+       * https://en.wikipedia.org/wiki/BMP_file_format#DIB_header_(bitmap_information_header)
+       */
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x0));
+      // horizontal resolution (in ppm)
+      write_le_int_to_file (output_fptr,
+                            static_cast<uint32_t> (ppm_resolution));
+      // vertical resolution (in ppm)
+      write_le_int_to_file (output_fptr,
+                            static_cast<uint32_t> (ppm_resolution));
+      // num colors in palette
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x0));
+      // num important colors
+      write_le_int_to_file (output_fptr, static_cast<uint32_t> (0x0));
     }
   catch (const std::exception &e)
     {

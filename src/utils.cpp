@@ -2,9 +2,10 @@
 
 #include <array>
 #include <format>
+#include <stdexcept>
 
 void
-write_string_to_output_file (std::ofstream &fptr, const std::string &s)
+write_string_to_file (std::ofstream &fptr, const std::string &s)
 {
   if (s.empty ())
     throw std::invalid_argument ("Input string cannot be empty.\n");
@@ -38,4 +39,29 @@ read_uint32_from_file (std::ifstream &fptr)
           | (static_cast<uint32_t> (bytes[2]) << 16)
           | (static_cast<uint32_t> (bytes[1]) << 8)
           | static_cast<uint32_t> (bytes[0]));
+}
+
+void
+write_le_int_to_file (std::ofstream &fptr, const uint32_t x)
+{
+  std::array<uint8_t, 4> bytes
+      = { static_cast<uint8_t> (x & 0xFF),
+          static_cast<uint8_t> ((x & 0xFF00) >> 8),
+          static_cast<uint8_t> ((x & 0xFF0000) >> 16),
+          static_cast<uint8_t> ((x & 0xFF000000) >> 24) };
+
+  fptr.write (reinterpret_cast<char *> (bytes.data ()), sizeof (bytes));
+  if (!fptr)
+    throw std::runtime_error ("Error writing uint32 to file.\n");
+}
+
+void
+write_le_int_to_file (std::ofstream &fptr, const uint16_t x)
+{
+  std::array<uint8_t, 2> bytes = { static_cast<uint8_t> (x & 0xFF),
+                                   static_cast<uint8_t> ((x & 0xFF00) >> 8) };
+
+  fptr.write (reinterpret_cast<char *> (bytes.data ()), sizeof (bytes));
+  if (!fptr)
+    throw std::runtime_error ("Error writing uint16 to file.\n");
 }
