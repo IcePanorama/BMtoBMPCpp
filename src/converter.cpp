@@ -8,7 +8,6 @@
 Converter::Converter (const std::string &bm_filename,
                       const std::string &pal_filename,
                       const std::string output_filename)
-    : output_filename_ (output_filename)
 {
   try
     {
@@ -33,7 +32,7 @@ Converter::Converter (const std::string &bm_filename,
       throw e;
     }
 
-  this->output.emplace (width, height);
+  this->output.emplace (output_filename, width, height);
   output->process_data (this->bm_file, this->pal_file);
 }
 

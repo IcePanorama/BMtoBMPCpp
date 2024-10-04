@@ -7,8 +7,9 @@
 
 static constexpr uint8_t BYTES_PER_PIXEL = 3; // 24 bits-per-pixel
 
-BitmapImage::BitmapImage (uint32_t width, uint32_t height)
-    : width_ (width), height_ (height)
+BitmapImage::BitmapImage (const std::string &filename, uint32_t width,
+                          uint32_t height)
+    : filename_ (filename), width_ (width), height_ (height)
 {
   this->data.emplace (this->height_,
                       std::vector<uint8_t> (this->width_ * BYTES_PER_PIXEL));

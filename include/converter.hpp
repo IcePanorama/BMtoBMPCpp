@@ -12,7 +12,6 @@ class Converter
 {
   std::ifstream bm_file;
   std::ifstream pal_file;
-  std::string output_filename_;
   std::optional<BitmapImage> output;
 
   std::ifstream load_file (const std::string &filename);
