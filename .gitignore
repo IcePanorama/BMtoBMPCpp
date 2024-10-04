@@ -8,6 +8,7 @@ build/*
 *.bmp
 *.json
 .cache/*
+vgcore.*
 
 # Prerequisites
 *.d
