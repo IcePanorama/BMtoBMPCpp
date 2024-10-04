@@ -1,8 +1,8 @@
 #include "bitmap_image.hpp"
+#include "utils.hpp"
 
 #include <array>
 #include <format>
-#include <fstream>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
@@ -80,16 +80,4 @@ BitmapImage::export_image (void) const
     {
       throw e;
     }
-}
-
-void
-BitmapImage::write_string_to_output_file (std::ofstream &fptr,
-                                          const std::string &s) const
-{
-  if (s.empty ())
-    throw std::invalid_argument ("Input string cannot be empty.\n");
-
-  fptr.write (s.c_str (), s.length ());
-  if (!fptr)
-    throw std::runtime_error ("Error writing data to output file.\n");
 }

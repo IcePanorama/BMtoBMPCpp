@@ -14,9 +14,6 @@ class BitmapImage
   uint32_t height_;
   std::optional<std::vector<std::vector<uint8_t> > > data;
 
-  void write_string_to_output_file (std::ofstream &fptr,
-                                    const std::string &s) const;
-
 public:
   BitmapImage (const std::string &filename, uint32_t width, uint32_t height);
 
