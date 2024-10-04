@@ -3,10 +3,10 @@ if [ ! -d "build" ]; then
 	mkdir build
 fi
 
-cd build
-
 rm BMtoBMPCpp
 rm BMtoBMPCpp_*
+
+cd build
 
 echo "Building Linux executable."
 rm -f CMakeCache.txt
