@@ -3,10 +3,6 @@
 
 #include "bitmap_image.hpp"
 
-#include <fstream>
-#include <optional>
-#include <string>
-
 class Converter
 {
   std::ifstream bm_file;

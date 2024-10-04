@@ -2,7 +2,6 @@
 #include "utils.hpp"
 
 #include <array>
-#include <cstdint>
 #include <format>
 #include <stdexcept>
 #include <unordered_map>

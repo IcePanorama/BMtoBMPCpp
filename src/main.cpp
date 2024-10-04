@@ -3,7 +3,6 @@
 #include <format>
 #include <iostream>
 #include <stdexcept>
-#include <string>
 
 static void handle_improper_usage_error (const std::string &exe_name);
 static void validate_user_input (const std::string &bm_filename,
