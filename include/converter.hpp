@@ -3,6 +3,7 @@
 
 #include "bitmap_image.hpp"
 
+/** Converts BM image files to bitmap images using PAL files. */
 class Converter
 {
   std::ifstream bm_file;
