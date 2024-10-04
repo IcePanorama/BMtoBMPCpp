@@ -77,6 +77,11 @@ BitmapImage::export_image (void) const
     {
       populate_BITMAPINFOHEADER (fptr);
       export_data (fptr);
+
+      /* Update size of pixel array in header. */
+      size_t file_size = fptr.tellp ();
+      fptr.seekp (0x22);
+      write_le_int_to_file (fptr, static_cast<uint32_t> (file_size - 54));
     }
   catch (const std::exception &e)
     {
