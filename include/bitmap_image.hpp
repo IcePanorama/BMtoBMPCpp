@@ -13,7 +13,6 @@ class BitmapImage
 
 public:
   BitmapImage (uint32_t _width, uint32_t _height);
-  //~BitmapImage (void);
 };
 
 #endif /* _BITMAP_IMAGE_HPP_ */

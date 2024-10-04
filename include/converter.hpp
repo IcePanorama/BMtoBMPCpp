@@ -12,7 +12,7 @@ class Converter
 {
   std::ifstream bm_file;
   std::ifstream pal_file;
-  std::string output_filename;
+  std::string output_filename_;
   std::optional<BitmapImage> output;
 
   std::ifstream load_file (const std::string &filename);
@@ -20,7 +20,7 @@ class Converter
 
 public:
   Converter (const std::string &bm_filename, const std::string &pal_filename,
-             const std::string _output_filename = "output.bmp");
+             const std::string output_filename = "output.bmp");
 };
 
 #endif /* _CONVERTER_HPP_ */

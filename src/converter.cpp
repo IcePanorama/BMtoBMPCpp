@@ -1,15 +1,14 @@
 #include "converter.hpp"
 
 #include <array>
-#include <cstddef>
 #include <format>
 #include <iostream>
 #include <stdexcept>
 
 Converter::Converter (const std::string &bm_filename,
                       const std::string &pal_filename,
-                      const std::string _output_filename)
-    : output_filename (_output_filename)
+                      const std::string output_filename)
+    : output_filename_ (output_filename)
 {
   try
     {
