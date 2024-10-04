@@ -3,7 +3,6 @@
 
 #include "bitmap_image.hpp"
 
-#include <cstdint>
 #include <fstream>
 #include <optional>
 #include <string>

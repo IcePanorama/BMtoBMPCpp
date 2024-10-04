@@ -1,8 +1,6 @@
 #include "converter.hpp"
 #include "utils.hpp"
 
-#include <stdexcept>
-
 Converter::Converter (const std::string &bm_filename,
                       const std::string &pal_filename,
                       const std::string output_filename)
@@ -12,8 +10,7 @@ Converter::Converter (const std::string &bm_filename,
       this->bm_file = load_file (bm_filename);
       this->pal_file = load_file (pal_filename);
     }
-  // TODO: convert all of these to std::exception
-  catch (std::runtime_error &e)
+  catch (const std::exception &e)
     {
       throw e;
     }
@@ -26,12 +23,19 @@ Converter::Converter (const std::string &bm_filename,
       width = read_uint32_from_file (bm_file);
       height = read_uint32_from_file (bm_file);
     }
-  catch (std::runtime_error &e)
+  catch (const std::exception &e)
     {
       throw e;
     }
 
   this->output.emplace (output_filename, width, height);
-  output->process_data (this->bm_file, this->pal_file);
-  output->export_image ();
+  try
+    {
+      output->process_data (this->bm_file, this->pal_file);
+      output->export_image ();
+    }
+  catch (const std::exception &e)
+    {
+      throw e;
+    }
 }
