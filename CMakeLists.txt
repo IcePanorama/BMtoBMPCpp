@@ -5,6 +5,9 @@ project(BMtoBMPCpp CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(WIN32_CC i686-w64-mingw32-g++)
+set(WIN64_CC x86_64-w64-mingw32-g++)
+
 add_compile_options(
     -std=c++20
     -Werror
@@ -67,3 +70,27 @@ add_custom_target(full
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 add_dependencies(${PROJECT_NAME} format)
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCL_DIR})
+
+
+# Win32 target
+add_custom_target(win32
+    COMMAND ${WIN32_CC} ${CMAKE_CXX_FLAGS} -o "${PROJECT_NAME}_i686.exe" ${SRC_FILES} -I${INCL_DIR}
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMENT "Building 32-bit executable."
+)
+
+# Win64 target
+add_custom_target(win64
+    COMMAND ${WIN64_CC} ${CMAKE_CXX_FLAGS} -o "${PROJECT_NAME}_x86_64.exe" ${SRC_FILES} -I${INCL_DIR}
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMENT "Building 64-bit executable."
+)
+
+# Release target
+add_custom_target(release
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target clean
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target ${PROJECT_NAME}
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target win32
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target win64
+    COMMENT "Running full build (clean, format, build, and test)."
+)
