@@ -3,6 +3,8 @@
 #include <array>
 #include <cstdint>
 #include <stdexcept>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 static constexpr uint8_t BYTES_PER_PIXEL = 3; // 24 bits-per-pixel
@@ -17,6 +19,8 @@ BitmapImage::BitmapImage (uint32_t width, uint32_t height)
 void
 BitmapImage::process_data (std::ifstream &bm_fptr, std::ifstream &pal_fptr)
 {
+  std::unordered_map<uint8_t, std::array<uint8_t, 3> > rgb_cache;
+
   /* Ensure we're at the start of the pixel data. */
   bm_fptr.seekg (0xC);
 
@@ -30,16 +34,23 @@ BitmapImage::process_data (std::ifstream &bm_fptr, std::ifstream &pal_fptr)
           if (!bm_fptr)
             throw std::runtime_error ("Error reading data from BM file.\n");
 
-          /*
-           *  TODO: cache rgb values, check cache prior to searching from the
-           *  pal file again.
-           */
-          /* Read rgb values from pal file. */
-          pal_fptr.seekg (pal_offset * 0x3);
           std::array<uint8_t, 3> rgb_values;
-          pal_fptr.read (reinterpret_cast<char *> (rgb_values.data ()), 3);
-          if (!pal_fptr)
-            throw std::runtime_error ("Error reading data from PAL file.\n");
+
+          auto got = rgb_cache.find (pal_offset);
+          if (got == rgb_cache.end ())
+            {
+              /* Read rgb values from pal file. */
+              pal_fptr.seekg (pal_offset * 0x3);
+              pal_fptr.read (reinterpret_cast<char *> (rgb_values.data ()), 3);
+              if (!pal_fptr)
+                throw std::runtime_error (
+                    "Error reading data from PAL file.\n");
+              rgb_cache.insert (std::make_pair (pal_offset, rgb_values));
+            }
+          else
+            {
+              rgb_values = rgb_cache.at (pal_offset);
+            }
 
           /* Convert rgb data to little endian form. */
           this->data->at (i).at (j * 3) = rgb_values[2];
