@@ -1,6 +1,8 @@
 #include "bitmap_image.hpp"
 
 #include <array>
+#include <format>
+#include <fstream>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
@@ -57,4 +59,37 @@ BitmapImage::process_data (std::ifstream &bm_fptr, std::ifstream &pal_fptr)
           this->data->at (i).at (j * 3 + 2) = rgb_values[0];
         }
     }
+}
+
+void
+BitmapImage::export_image (void) const
+{
+  std::ofstream fptr (this->filename_, std::ios::binary);
+  if (!fptr)
+    throw std::runtime_error (std::format (
+        "Error opening file, {}, for output.\n", this->filename_));
+
+  /* Ensure we're at the beginning of the file. */
+  fptr.seekp (0x0);
+
+  try
+    {
+      write_string_to_output_file (fptr, "BM");
+    }
+  catch (const std::exception &e)
+    {
+      throw e;
+    }
+}
+
+void
+BitmapImage::write_string_to_output_file (std::ofstream &fptr,
+                                          const std::string &s) const
+{
+  if (s.empty ())
+    throw std::invalid_argument ("Input string cannot be empty.\n");
+
+  fptr.write (s.c_str (), s.length ());
+  if (!fptr)
+    throw std::runtime_error ("Error writing data to output file.\n");
 }

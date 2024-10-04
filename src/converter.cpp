@@ -34,6 +34,7 @@ Converter::Converter (const std::string &bm_filename,
 
   this->output.emplace (output_filename, width, height);
   output->process_data (this->bm_file, this->pal_file);
+  output->export_image ();
 }
 
 std::ifstream
