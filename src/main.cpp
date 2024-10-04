@@ -30,15 +30,14 @@ main (int argc, char **argv)
 
   std::cout << std::format ("Converting image, {}.\n", bm_filename);
 
-  std::optional<Converter> c;
   try
     {
-      c.emplace (bm_filename, pal_filename);
+      Converter c (bm_filename, pal_filename);
     }
   catch (const std::exception &e)
     {
       std::cerr << e.what ();
-      exit (1);
+      return -1;
     }
 
   std::cout << "Done!\n";
