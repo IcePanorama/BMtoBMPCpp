@@ -1,5 +1,6 @@
 #include "converter.hpp"
 
+#include <exception>
 #include <format>
 #include <iostream>
 #include <stdexcept>
@@ -27,7 +28,20 @@ main (int argc, char **argv)
   const std::string bm_filename (argv[1]);
   const std::string pal_filename (argv[2]);
 
-  Converter c (bm_filename, pal_filename);
+  std::cout << std::format ("Converting image, {}.\n", bm_filename);
+
+  std::optional<Converter> c;
+  try
+    {
+      c.emplace (bm_filename, pal_filename);
+    }
+  catch (const std::exception &e)
+    {
+      std::cerr << e.what ();
+      exit (1);
+    }
+
+  std::cout << "Done!\n";
 
   return 0;
 }
