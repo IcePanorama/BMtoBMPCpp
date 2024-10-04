@@ -1,11 +1,9 @@
 #include "bitmap_image.hpp"
 
 #include <array>
-#include <cstdint>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
-#include <vector>
 
 static constexpr uint8_t BYTES_PER_PIXEL = 3; // 24 bits-per-pixel
 
