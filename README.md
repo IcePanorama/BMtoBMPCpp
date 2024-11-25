@@ -1,5 +1,5 @@
 # BMtoBMPCpp
-A tool for converting BM files to the bitmap image format using PAL files, written in C++20.
+A tool for converting proprietary BM image files into bitmap images, written in C++20.
 
 ## Installing
 
